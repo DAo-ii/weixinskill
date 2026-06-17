@@ -59,7 +59,18 @@ export default {
 
       // Projects routes
       if (url.pathname === '/api/projects' && request.method === 'GET') {
-        return new Response(JSON.stringify([]), {
+        // 返回模拟项目数据
+        const projects = [
+          {
+            id: 1,
+            name: '测试奶茶店',
+            template_id: 'milk-tea',
+            status: 'completed',
+            created_at: new Date().toISOString(),
+            output_path: '/projects/1/output.zip',
+          },
+        ];
+        return new Response(JSON.stringify(projects), {
           headers: { ...headers, 'Content-Type': 'application/json' }
         });
       }
