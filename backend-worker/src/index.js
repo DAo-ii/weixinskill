@@ -99,7 +99,7 @@ export default {
       }
 
       // Download route
-      if (url.pathname.match(/\/api\/projects\/\d+\/download$/) && request.method === 'GET') {
+      if (url.pathname.includes('/download') && request.method === 'GET') {
         // Mock download - return a simple ZIP file
         const zipContent = 'PK\x03\x04'; // Minimal ZIP header
         return new Response(zipContent, {
