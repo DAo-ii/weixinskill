@@ -52,7 +52,7 @@ export default function DashboardPage() {
     }
 
     setDownloadingId(projectId)
-    const downloadUrl = `/api/projects/${projectId}/download`
+    const downloadUrl = `https://weixinskill-backend.2835857150y.workers.dev/api/projects/${projectId}/download`
 
     try {
       const response = await fetch(downloadUrl, {
