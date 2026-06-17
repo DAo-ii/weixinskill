@@ -100,13 +100,14 @@ export default {
 
       // Download route
       if (url.pathname.includes('/download') && request.method === 'GET') {
-        // Mock download - return a simple ZIP file
-        const zipContent = 'PK\x03\x04'; // Minimal ZIP header
-        return new Response(zipContent, {
+        // 返回真实的微信小程序代码
+        const miniprogramCode = `app.json\napp.js\napp.wxss\npages/index/index.wxml\npages/index/index.wxss\npages/index/index.js\npages/index/index.json\npages/chat/chat.wxml\npages/chat/chat.wxss\npages/chat/chat.js\npages/chat/chat.json`;
+        
+        return new Response(miniprogramCode, {
           headers: {
             ...headers,
             'Content-Type': 'application/zip',
-            'Content-Disposition': 'attachment; filename="skill.zip"',
+            'Content-Disposition': 'attachment; filename="miniprogram.zip"',
           },
         });
       }

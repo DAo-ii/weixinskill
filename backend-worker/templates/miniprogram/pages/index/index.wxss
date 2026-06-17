@@ -1,0 +1,52 @@
+﻿.container {
+  padding: 20rpx;
+}
+.header {
+  text-align: center;
+  padding: 40rpx 0;
+}
+.title {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #07c160;
+}
+.subtitle {
+  font-size: 28rpx;
+  color: #999;
+}
+.input-area {
+  display: flex;
+  padding: 20rpx 0;
+}
+.input {
+  flex: 1;
+  height: 80rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 10rpx;
+  padding: 0 20rpx;
+}
+.send-btn {
+  margin-left: 20rpx;
+  background-color: #07c160;
+  color: white;
+  border-radius: 10rpx;
+}
+.chat-area {
+  margin-top: 20rpx;
+}
+.message {
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+  border-radius: 10rpx;
+  max-width: 80%;
+}
+.message.user {
+  background-color: #07c160;
+  color: white;
+  margin-left: auto;
+  text-align: right;
+}
+.message.assistant {
+  background-color: white;
+  color: #333;
+}

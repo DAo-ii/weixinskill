@@ -1,0 +1,17 @@
+﻿<view class="container">
+  <view class="header">
+    <text class="title">AI智能客服</text>
+    <text class="subtitle">有问题？问我就好</text>
+  </view>
+  
+  <view class="input-area">
+    <input class="input" placeholder="输入你的问题..." bindinput="onInput" value="{{inputValue}}" />
+    <button class="send-btn" bindtap="sendMessage">发送</button>
+  </view>
+  
+  <view class="chat-area">
+    <view class="message {{item.role}}" wx:for="{{messages}}" wx:key="index">
+      <text class="message-text">{{item.content}}</text>
+    </view>
+  </view>
+</view>

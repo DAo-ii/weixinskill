@@ -1,0 +1,12 @@
+﻿{
+  "pages": [
+    "pages/index/index",
+    "pages/chat/chat"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#07c160",
+    "navigationBarTitleText": "AI智能客服",
+    "navigationBarTextStyle": "white"
+  }
+}
