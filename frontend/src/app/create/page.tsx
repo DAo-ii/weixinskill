@@ -429,8 +429,9 @@ export default function CreateProjectPage() {
   useEffect(() => {
     const fetchTemplates = async () => {
       try {
-        const data = await apiClient.get('/templates') as Template[]
-        setTemplates(data)
+        const data = await apiClient.get('/templates') as any
+        console.log('Templates response:', data)
+        setTemplates(Array.isArray(data) ? data : [])
       } catch (err) {
         console.error('Failed to fetch templates:', err)
       } finally {
