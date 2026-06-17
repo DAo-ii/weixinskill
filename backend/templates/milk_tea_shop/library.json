@@ -1,0 +1,175 @@
+# 奶茶店行业原子接口与组件库
+
+版本: 1.0.0
+更新日期: 2024-01-01
+
+---
+
+## 📦 原子接口库 (Atomic Functions)
+
+### 产品类接口 (Product Functions)
+
+| 接口名称 | 功能描述 | 使用场景 |
+|---------|---------|---------|
+| `queryProductList` | 查询产品列表 | 菜单浏览、分类筛选、搜索 |
+| `queryProductDetail` | 查询产品详情 | 产品详情页、推荐搭配 |
+
+### 订单类接口 (Order Functions)
+
+| 接口名称 | 功能描述 | 使用场景 |
+|---------|---------|---------|
+| `createOrder` | 创建订单 | 下单支付 |
+| `queryOrderStatus` | 查询订单状态 | 订单跟踪、实时状态 |
+| `cancelOrder` | 取消订单 | 订单管理 |
+
+### 优惠券类接口 (Coupon Functions)
+
+| 接口名称 | 功能描述 | 使用场景 |
+|---------|---------|---------|
+| `queryAvailableCoupons` | 查询可用优惠券 | 优惠券列表、用户领取 |
+| `applyCoupon` | 应用优惠券 | 订单结算、优惠抵扣 |
+
+### 库存类接口 (Inventory Functions)
+
+| 接口名称 | 功能描述 | 使用场景 |
+|---------|---------|---------|
+| `queryInventory` | 查询库存 | 库存管理、补货提醒 |
+
+### 排队类接口 (Queue Functions)
+
+| 接口名称 | 功能描述 | 使用场景 |
+|---------|---------|---------|
+| `queryQueueStatus` | 查询排队情况 | 排队叫号、等待时间 |
+| `getQueueNumber` | 获取排队号码 | 取号排队 |
+
+### 通知类接口 (Notification Functions)
+
+| 接口名称 | 功能描述 | 使用场景 |
+|---------|---------|---------|
+| `sendOrderNotification` | 发送订单通知 | 订单状态变更提醒 |
+
+### 会员类接口 (Member Functions)
+
+| 接口名称 | 功能描述 | 使用场景 |
+|---------|---------|---------|
+| `queryMemberInfo` | 查询会员信息 | 会员中心、个人资料 |
+| `queryPointsHistory` | 查询积分明细 | 积分记录、积分商城 |
+
+### 评价类接口 (Review Functions)
+
+| 接口名称 | 功能描述 | 使用场景 |
+|---------|---------|---------|
+| `submitReview` | 提交评价 | 订单完成、评价奖励 |
+
+---
+
+## 🎨 原子组件库 (Atomic Components)
+
+### 展示类组件 (Display Components)
+
+| 组件名称 | 功能描述 | 使用场景 |
+|---------|---------|---------|
+| `ProductCard` | 产品卡片 | 菜单列表、产品展示 |
+| `CouponCard` | 优惠券卡片 | 优惠券领取、优惠展示 |
+| `QueueDisplay` | 排队显示 | 排队叫号、等待提示 |
+| `OrderStatus` | 订单状态 | 订单详情、进度展示 |
+| `StarRating` | 星级评价 | 商品评分、用户评价 |
+
+### 交互类组件 (Interactive Components)
+
+| 组件名称 | 功能描述 | 使用场景 |
+|---------|---------|---------|
+| `CategoryTabs` | 分类标签 | 产品分类、快捷切换 |
+| `CartDrawer` | 购物车抽屉 | 购物车管理、结算入口 |
+
+---
+
+## 📁 文件结构
+
+```
+milk_tea_shop/
+├── functions/                    # 原子接口库
+│   ├── index.js                # 接口总索引
+│   ├── queryProduct.js         # 产品查询接口
+│   ├── createOrder.js          # 订单接口
+│   ├── applyCoupon.js          # 优惠券接口
+│   ├── queryInventory.js       # 库存接口
+│   ├── queryQueue.js           # 排队接口
+│   ├── sendNotification.js      # 通知接口
+│   ├── queryMember.js          # 会员接口
+│   └── submitReview.js         # 评价接口
+│
+├── components/                  # 原子组件库
+│   ├── index.js               # 组件总索引
+│   ├── ProductCard/           # 产品卡片组件
+│   ├── CategoryTabs/          # 分类标签组件
+│   ├── CartDrawer/            # 购物车组件
+│   ├── OrderStatus/           # 订单状态组件
+│   ├── CouponCard/            # 优惠券组件
+│   ├── QueueDisplay/          # 排队显示组件
+│   └── StarRating/            # 星级评价组件
+│
+└── templates/
+    ├── SKILL.md.jinja2        # 技能包说明模板
+    └── mcp.json.jinja2        # 接口配置模板
+```
+
+---
+
+## 🚀 快速使用
+
+### 1. 引入接口
+
+```javascript
+const { queryProductList, createOrder } = require('./functions');
+
+// 查询产品列表
+const products = await queryProductList({ category: '奶茶' });
+
+// 创建订单
+const order = await createOrder({
+    items: [{ id: 1, quantity: 2 }],
+    customer: { name: '张三', phone: '13800138000' }
+});
+```
+
+### 2. 引入组件
+
+```javascript
+const { ProductCard, CategoryTabs } = require('./components');
+
+// 在页面中使用
+Page({
+    components: {
+        ProductCard,
+        CategoryTabs
+    }
+});
+```
+
+---
+
+## 📊 扩展计划
+
+### 下一版本 (v1.1.0) - 预计增加
+
+**新接口：**
+- `queryStoreInfo` - 门店信息查询
+- `bookTable` - 预约座位
+- `queryDeliveryStatus` - 外卖配送状态
+- `applyMembership` - 申请会员
+
+**新组件：**
+- `StoreSelector` - 门店选择器
+- `TablePicker` - 座位预约组件
+- `DeliveryTracker` - 配送追踪组件
+
+---
+
+### 长期规划
+
+- [ ] 支持多语言（English）
+- [ ] 支持多货币
+- [ ] 支持更多行业模板（咖啡店、烘焙店、快餐店）
+- [ ] 支持自定义接口配置
+- [ ] 支持组件样式自定义

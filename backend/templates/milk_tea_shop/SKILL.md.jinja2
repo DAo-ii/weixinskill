@@ -1,0 +1,77 @@
+# {{ shop_name }} AI 助手
+
+## 概述
+
+本技能包为「{{ shop_name }}」提供智能客服能力，基于微信 AI 技能框架开发。
+顾客可以通过自然语言与 AI 助手交互，完成产品查询、下单、优惠活动咨询等操作。
+
+## 基本信息
+
+- **店铺名称**: {{ shop_name }}
+- **AI 助手名称**: {{ ai_name or '小助手' }}
+- **行业类型**: 奶茶饮品
+- **版本**: 1.0.0
+
+{% if hours %}
+## 营业时间
+
+{{ hours }}
+{% endif %}
+
+{% if discount %}
+## 优惠活动
+
+{{ discount }}
+{% endif %}
+
+## 产品列表
+
+| 产品名称 | 价格 |
+|---------|------|
+{% for product in products %}
+| {{ product.name }} | ¥{{ product.price }} |
+{% endfor %}
+
+## 支持的意图
+
+1. **查询产品** - "你们有什么奶茶？"、"推荐一款好喝的"
+2. **下单购买** - "我要一杯珍珠奶茶"、"来两杯柠檬茶"
+3. **查询优惠** - "有什么活动？"、"优惠券怎么用"
+4. **营业时间** - "几点开门？"、"现在营业吗"
+
+## 对话示例
+
+### 示例 1：产品查询
+
+**用户**: 你们有什么推荐？
+**AI**: 我们家的招牌是{% if products %}{{ products[0].name }}{% else %}经典奶茶{% endif %}，非常受欢迎！我们还有以下产品：
+{% for product in products %}- {{ product.name }} (¥{{ product.price }})
+{% endfor %}
+
+### 示例 2：下单
+
+**用户**: 我要一杯珍珠奶茶，少糖
+**AI**: 好的，已为您添加：
+- 珍珠奶茶 (少糖) - ¥{% for p in products %}{% if '珍珠' in p.name or '奶茶' in p.name %}{{ p.price }}{% endif %}{% endfor %}
+
+请问是自提还是外卖？
+
+## 原子接口
+
+本技能包包含以下原子接口：
+
+1. `queryProduct` - 查询产品信息
+2. `createOrder` - 创建订单
+3. `queryDiscount` - 查询优惠活动
+4. `getBusinessHours` - 获取营业时间
+
+## 注意事项
+
+- 所有价格以人民币（¥）计价
+- 支持自定义糖度、冰度、加料等选项
+- 高峰期可能需要等待
+
+---
+
+*由 [码上未来](https://wxskill.ai) 自动生成*
+*生成时间: {{ generation_time }}*

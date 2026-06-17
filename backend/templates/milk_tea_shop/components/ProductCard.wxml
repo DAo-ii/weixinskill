@@ -1,0 +1,16 @@
+<!-- 产品卡片组件 -->
+<view class="product-card">
+  <view class="product-info">
+    <text class="product-name">{{product.name}}</text>
+    <text class="product-desc">{{product.description}}</text>
+    <view class="product-price">
+      <text class="price-symbol">¥</text>
+      <text class="price-value">{{product.price}}</text>
+    </view>
+  </view>
+  <view class="product-action">
+    <button class="btn-add" size="mini" type="primary" bindtap="onAddToCart">
+      加入购物车
+    </button>
+  </view>
+</view>

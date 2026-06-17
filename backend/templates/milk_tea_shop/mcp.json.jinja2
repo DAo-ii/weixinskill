@@ -1,0 +1,360 @@
+{
+  "name": "{{ shop_name | replace(' ', '_') }}_assistant",
+  "version": "1.0.0",
+  "description": "{{ shop_name }} AI 智能助手 - 提供产品查询、下单、优惠券、会员服务等全方位智能客服体验",
+  "maintainer": "微信AI优先推荐",
+  "industry": "food_beverage",
+  "category": "milk_tea",
+  "language": "zh-CN",
+  "metadata": {
+    "functions_count": 12,
+    "components_count": 8,
+    "template_version": "1.0.0"
+  },
+  "functions": [
+    {
+      "name": "queryProduct",
+      "description": "查询店铺产品列表或特定产品详情",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "product_name": {
+            "type": "string",
+            "description": "产品名称，可选。不提供则返回所有产品"
+          },
+          "category": {
+            "type": "string",
+            "description": "产品分类，如：奶茶、果茶、咖啡"
+          }
+        }
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {"type": "string"},
+                "price": {"type": "number"},
+                "description": {"type": "string"},
+                "category": {"type": "string"}
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "createOrder",
+      "description": "创建订单",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "product_name": {"type": "string"},
+                "quantity": {"type": "integer", "minimum": 1},
+                "specifications": {
+                  "type": "object",
+                  "properties": {
+                    "sugar": {"type": "string", "enum": ["无糖", "三分糖", "五分糖", "七分糖", "全糖"]},
+                    "ice": {"type": "string", "enum": ["去冰", "少冰", "正常冰", "多冰"]},
+                    "toppings": {
+                      "type": "array",
+                      "items": {"type": "string"}
+                    }
+                  }
+                }
+              },
+              "required": ["product_name", "quantity"]
+            }
+          },
+          "delivery_type": {
+            "type": "string",
+            "enum": ["pickup", "delivery"],
+            "description": "取餐方式：pickup(自提) 或 delivery(外卖)"
+          },
+          "remarks": {
+            "type": "string",
+            "description": "订单备注"
+          }
+        },
+        "required": ["items", "delivery_type"]
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "order_id": {"type": "string"},
+          "total_amount": {"type": "number"},
+          "status": {"type": "string"},
+          "estimated_time": {"type": "string"}
+        }
+      }
+    },
+    {
+      "name": "queryDiscount",
+      "description": "查询当前优惠活动",
+      "parameters": {
+        "type": "object",
+        "properties": {}
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "discounts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {"type": "string"},
+                "description": {"type": "string"},
+                "valid_until": {"type": "string"}
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "getBusinessHours",
+      "description": "获取店铺营业时间",
+      "parameters": {
+        "type": "object",
+        "properties": {}
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "hours": {"type": "string"},
+          "is_open": {"type": "boolean"}
+        }
+      }
+    },
+    {
+      "name": "queryCoupon",
+      "description": "查询用户可用的优惠券列表",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "order_amount": {
+            "type": "number",
+            "description": "订单金额，用于筛选可用优惠券"
+          }
+        }
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "coupons": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {"type": "number"},
+                "name": {"type": "string"},
+                "type": {"type": "string"},
+                "value": {"type": "number"},
+                "min_amount": {"type": "number"},
+                "exp_date": {"type": "string"}
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "applyCoupon",
+      "description": "应用优惠券到订单",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "coupon_id": {"type": "number"},
+          "order_amount": {"type": "number"}
+        },
+        "required": ["coupon_id", "order_amount"]
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "discount": {"type": "number"},
+          "final_amount": {"type": "number"}
+        }
+      }
+    },
+    {
+      "name": "queryOrderStatus",
+      "description": "查询订单状态和进度",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "order_id": {"type": "string"}
+        },
+        "required": ["order_id"]
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "order_id": {"type": "string"},
+          "status": {"type": "string"},
+          "status_desc": {"type": "string"},
+          "progress": {"type": "number"},
+          "estimated_time": {"type": "string"}
+        }
+      }
+    },
+    {
+      "name": "cancelOrder",
+      "description": "取消未完成的订单",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "order_id": {"type": "string"},
+          "reason": {"type": "string"}
+        },
+        "required": ["order_id"]
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "success": {"type": "boolean"},
+          "refund_amount": {"type": "number"}
+        }
+      }
+    },
+    {
+      "name": "queryQueueStatus",
+      "description": "查询当前排队情况",
+      "parameters": {
+        "type": "object",
+        "properties": {}
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "current_number": {"type": "number"},
+          "estimated_wait": {"type": "number"},
+          "queue_length": {"type": "number"},
+          "status": {"type": "string"}
+        }
+      }
+    },
+    {
+      "name": "getQueueNumber",
+      "description": "获取排队号码",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "person_count": {"type": "number", "default": 1}
+        }
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "queue_id": {"type": "string"},
+          "queue_number": {"type": "number"},
+          "estimated_wait": {"type": "number"}
+        }
+      }
+    },
+    {
+      "name": "queryMemberInfo",
+      "description": "查询会员信息",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "member_id": {"type": "string"}
+        },
+        "required": ["member_id"]
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "member_id": {"type": "string"},
+          "name": {"type": "string"},
+          "level": {"type": "string"},
+          "points": {"type": "number"},
+          "benefits": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    {
+      "name": "queryPointsHistory",
+      "description": "查询积分明细记录",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "member_id": {"type": "string"}
+        },
+        "required": ["member_id"]
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "history": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": {"type": "string"},
+                "desc": {"type": "string"},
+                "points": {"type": "number"},
+                "balance": {"type": "number"}
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "submitReview",
+      "description": "提交订单评价",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "order_id": {"type": "string"},
+          "rating": {"type": "number", "minimum": 1, "maximum": 5},
+          "comment": {"type": "string"}
+        },
+        "required": ["order_id", "rating"]
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "success": {"type": "boolean"},
+          "reward": {"type": "number"}
+        }
+      }
+    },
+    {
+      "name": "sendNotification",
+      "description": "发送订单状态通知",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "order_id": {"type": "string"},
+          "type": {"type": "string", "enum": ["created", "paid", "preparing", "ready", "completed"]}
+        },
+        "required": ["order_id", "type"]
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "success": {"type": "boolean"},
+          "sent_at": {"type": "string"}
+        }
+      }
+    }
+  ],
+  "welcome_message": "您好！我是{{ ai_name or shop_name }}的智能助手，很高兴为您服务。我可以帮您查询产品、下单、了解优惠活动，请问有什么可以帮您的？",
+  "suggested_questions": [
+    "你们有什么招牌推荐？",
+    "现在有什么优惠活动？",
+    "营业时间是什么时候？",
+    "可以外卖吗？"
+  ]
+}

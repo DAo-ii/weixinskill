@@ -1,0 +1,47 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+*.egg
+dist/
+build/
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Database
+*.db
+*.sqlite3
+
+# Node
+node_modules/
+.next/
+out/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Generated outputs
+uploads/*.zip
+uploads/project_*/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Office temp files
+~$*
+
+# Logs
+*.log
+app.log
+
+# Build info
+tsconfig.tsbuildinfo
