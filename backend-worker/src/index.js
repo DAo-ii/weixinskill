@@ -64,6 +64,29 @@ export default {
         });
       }
 
+      // Create project
+      if (url.pathname === '/api/projects' && request.method === 'POST') {
+        const body = await request.json();
+        const project = {
+          id: 1,
+          name: body.name,
+          template_id: body.template_id,
+          config: body.config,
+          status: 'pending',
+          created_at: new Date().toISOString(),
+        };
+        return new Response(JSON.stringify(project), {
+          headers: { ...headers, 'Content-Type': 'application/json' }
+        });
+      }
+
+      // Generate project
+      if (url.pathname.match(/\/api\/projects\/\d+\/generate$/) && request.method === 'POST') {
+        return new Response(JSON.stringify({ message: '生成成功', status: 'completed' }), {
+          headers: { ...headers, 'Content-Type': 'application/json' }
+        });
+      }
+
       // Download route
       if (url.pathname.match(/\/api\/projects\/\d+\/download$/) && request.method === 'GET') {
         // Mock download - return a simple ZIP file
