@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://weixinskill-backend.2835857150y.workers.dev/api'
+const API_BASE_URL = 'https://weixinskill-backend.2835857150y.workers.dev/api'
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
