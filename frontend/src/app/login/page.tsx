@@ -25,10 +25,12 @@ export default function LoginPage() {
 
     try {
       const response = await apiClient.post('/auth/login', formData) as any
-      localStorage.setItem('token', response.access_token || response.data?.access_token)
+      console.log('Login response:', response)
+      localStorage.setItem('token', response.token || response.access_token || response.data?.access_token)
       router.push('/dashboard')
     } catch (err: any) {
-      setError(err.message || '登录失败')
+      console.error('Login error:', err)
+      setError(err.message || '鐧诲綍澶辫触')
     } finally {
       setLoading(false)
     }
@@ -36,7 +38,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* 顶部品牌区域 */}
+      {/* 椤堕儴鍝佺墝鍖哄煙 */}
       <div className="bg-white pt-16 pb-8 px-4">
         <div className="max-w-md mx-auto text-center">
           <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg shadow-green-200">
@@ -44,16 +46,16 @@ export default function LoginPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">微信AI优先推荐</h1>
-          <p className="text-gray-500">为实体商户打造的 AI 技能包平台</p>
+          <h1 className="text-2xl font-bold text-gray-800 mb-2">寰俊AI浼樺厛鎺ㄨ崘</h1>
+          <p className="text-gray-500">涓哄疄浣撳晢鎴锋墦閫犵殑 AI 鎶€鑳藉寘骞冲彴</p>
         </div>
       </div>
 
-      {/* 登录表单 */}
+      {/* 鐧诲綍琛ㄥ崟 */}
       <div className="flex-1 px-4 py-8">
         <div className="max-w-md mx-auto">
           <div className="bg-white rounded-2xl p-6 shadow-sm">
-            <h2 className="text-xl font-semibold text-gray-800 mb-6">登录账户</h2>
+            <h2 className="text-xl font-semibold text-gray-800 mb-6">鐧诲鐧诲綍璐︽埛</h2>
 
             {error && (
               <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm">
@@ -64,14 +66,13 @@ export default function LoginPage() {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  手机号
-                </label>
+                  鎵嬫満鍙?                </label>
                 <input
                   type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  placeholder="请输入手机号"
+                  placeholder="璇疯緭鍏ユ墜鏈哄彿"
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
                   required
                 />
@@ -79,14 +80,14 @@ export default function LoginPage() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  密码
+                  瀵嗙爜
                 </label>
                 <input
                   type="password"
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  placeholder="请输入密码"
+                  placeholder="璇疯緭鍏ュ瘑鐮?
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
                   required
                 />
@@ -100,36 +101,36 @@ export default function LoginPage() {
                 {loading ? (
                   <>
                     <div className="w-5 h-5 border-3 border-white border-t-transparent rounded-full animate-spin"></div>
-                    登录中...
+                    鐧诲綍涓?..
                   </>
                 ) : (
-                  '登录'
+                  '鐧诲綍'
                 )}
               </button>
             </form>
 
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-500">
-                还没有账户？
+                杩樻看病鏈夎处鎴凤紵
                 <Link href="/register" className="text-green-600 font-medium hover:underline ml-1">
-                  立即注册
+                  绔嬪嵆娉ㄥ唽
                 </Link>
               </p>
             </div>
           </div>
 
-          {/* 演示账号提示 */}
+          {/* 婕旂ず璐﹀彿鎻愮ず */}
           <div className="mt-6 p-4 bg-blue-50 rounded-xl">
-            <p className="text-sm text-blue-800 font-medium mb-2">演示账号</p>
-            <p className="text-sm text-blue-600">手机号：13800138000</p>
-            <p className="text-sm text-blue-600">密码：123456</p>
+            <p className="text-sm text-blue-800 font-medium mb-2">婕旂ず璐﹀彿</p>
+            <p className="text-sm text-blue-600">鎵嬫満鍙凤細13800138000</p>
+            <p className="text-sm text-blue-600">瀵嗙爜锛?23456</p>
           </div>
         </div>
       </div>
 
-      {/* 底部版权 */}
+      {/* 搴曢儴鐗堟潈 */}
       <div className="py-6 text-center">
-        <p className="text-sm text-gray-400">© 2024 微信AI优先推荐 All Rights Reserved</p>
+        <p className="text-sm text-gray-400">漏 2024 寰俊AI浼樺厛鎺ㄨ崘 All Rights Reserved</p>
       </div>
     </div>
   )
